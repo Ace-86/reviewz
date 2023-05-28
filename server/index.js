@@ -2,18 +2,26 @@ const mysql = require('mysql');
 const express = require('express');
 const app = express();
 
-const db = mysql.createConnection({
-    host: 'localhost',
+const con = mysql.createConnection({
     user: 'root',
+    host: 'localhost',
     password: 'Anymean1$1',
-    database: 'CRUDDB',
+    database: 'CRUDDB'
+});
+
+con.connect(function(err){
+    if(err)
+    {
+        console.log(err)
+    } else {
+        console.log("connected")
+
+    }
 })
 
-
 app.get("/", (req, res) => {
-    const sqlInsert = "INSERT INTO reviews (reviewTitle, review) VALUES ('varisity boys', 'it sux');"
-    db.query(sqlInsert, (err, result) => {
-
+    const sqlInsert = "INSERT INTO reviews (reviewTitle, review) VALUES ('GoGo Beats', 'It was okay but not really');"
+    con.query(sqlInsert, (err, result) => {
         res.send("hello world");
     });
 });
