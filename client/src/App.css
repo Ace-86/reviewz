@@ -1,0 +1,47 @@
+.app {
+  background-color: #111;
+  padding: 20px;
+}
+
+.review-input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.review-input-container input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.review-input-container button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.review-cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+.review-card {
+  background-color: #222;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-card h2 {
+  margin-bottom: 10px;
+}
+
+
