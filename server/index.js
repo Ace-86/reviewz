@@ -1,23 +1,23 @@
+const mysql = require('mysql');
 const express = require('express');
 const app = express();
-const mysql = require('mysql');
 
-const db = mysql.createPool({
+const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'password',
+    password: 'Anymean1$1',
     database: 'CRUDDB',
 })
 
 
 app.get("/", (req, res) => {
-    const sqlInsert = "INSERT INTO reviews (reviewTitle, review) VALUES ('inception', 'good movie');"
+    const sqlInsert = "INSERT INTO reviews (reviewTitle, review) VALUES ('varisity boys', 'it sux');"
     db.query(sqlInsert, (err, result) => {
 
         res.send("hello world");
     });
 });
 
-app.listen(3006, () =>{
-    console.log('running port 3006')
+app.listen(3001, () =>{
+    console.log('running port 3001')
 })
