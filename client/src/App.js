@@ -1,41 +1,38 @@
 import React, { useState } from 'react';
 import './App.css';
-
+import Axios from 'axios';
 
 const App = () => {
-  const [reviews, setReviews] = useState();
-  const [newReview, setNewReview] = useState({ title: '', text: '' });
+  const [reviewTitle, setReviewTitle] = useState('');
+  const [review, setReview] = useState('');
 
-  const handleAddReview = () => {
-    if (newReview.title.trim() !== '' && newReview.text.trim() !== '') {
-      const review = {
-        id: Date.now(),
-        title: newReview.title,
-        text: newReview.text,
-        likes: 0,
-        dislikes: 0,
-      };
-      setReviews([...reviews, review]);
-      setNewReview({ title: '', text: '' });
-    }
-  };
-
+  const  submitReview = () => {
+    Axios.post('http://localhost:3001/api/insert', 
+    {
+      reviewTitle: reviewTitle, 
+      review: review
+    }).then(() => {
+      alert("successful insert")
+    })
+  }
   return (
     <div className="app">
       <div className="review-input-container">
         <input
           type="text"
+          name="Title"
           placeholder="Review Title"
-          value={newReview.title}
-          onChange={e => setNewReview({ ...newReview, title: e.target.value })}
+          value={reviewTitle.title}
+          onChange={e => setReviewTitle(e.target.value )}
         />
         <input
           type="text"
+          name="Content"
           placeholder="Review Content"
-          value={newReview.text}
-          onChange={e => setNewReview({ ...newReview, text: e.target.value })}
+          value={review.text}
+          onChange={e => setReview(e.target.value )}
         />
-        <button onClick={handleAddReview}>Add Review</button>
+        <button onClick={submitReview} >Add Review</button>
       </div>
     </div>
   );
