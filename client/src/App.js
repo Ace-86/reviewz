@@ -7,8 +7,8 @@ const App = () => {
   const [review, setReview] = useState('');
   const [reviewList, setReviewList] = useState([]);
   
+
   useEffect(() => {
-  
       Axios.get('http://localhost:3001/api/get').then((response) => {
         console.log(response.data);
         setReviewList(response.data)
@@ -22,9 +22,13 @@ const App = () => {
     {
       reviewTitle: reviewTitle, 
       review: review
-    }).then(() => {
-      alert("successful insert")
-    })
+    });
+    // removed promise to update page w/ new data without reload
+      setReviewList([...reviewList,
+        {reviewTitle: reviewTitle,
+          review: review
+        }])
+    
   }
 
 
@@ -48,11 +52,15 @@ const App = () => {
         <button onClick={submitReview} >Add Review</button>
         </div>
       
-      {reviewList.map((val) => {
-        return <h1> 
-          reviewTitle: {val.reviewTitle} | User Review: {val.review}
-        </h1>
-      })};
+      
+      <div className="card-container">
+        {reviewList.map((val, index) => (
+          <div className="card" key={index}>
+            <h1>Review Title: {val.reviewTitle}</h1>
+            <p>User Review: {val.review}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
