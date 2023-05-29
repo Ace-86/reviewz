@@ -44,4 +44,17 @@
   margin-bottom: 10px;
 }
 
+/* completed reviews go into seperate cards below */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
 
+.card {
+  width: calc(25% - 20px);
+  margin: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
