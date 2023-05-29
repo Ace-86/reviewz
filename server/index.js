@@ -44,6 +44,16 @@ app.post("/api/insert", (req, res) => {
     })
 });
 
+app.delete("/api/delete/:reviewTitle", (req, res) => {
+    const title = req.params.reviewTitle
+    const sqlDelete = 
+    "DELETE from reviews WHERE reviewTitle = ?"
+   con.query(sqlDelete, title, (err, result) => {
+    if(err) console.log(err);
+   })
+   
+});
+
 app.listen(3001, () =>{
     console.log('running port 3001')
 })
