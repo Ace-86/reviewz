@@ -31,6 +31,9 @@ const App = () => {
     
   }
 
+  const deleteReview = (title) => {
+    Axios.delete(`http://localhost:3001/api/delete/${title}`);
+  }
 
   return (
     <div className="app">
@@ -58,6 +61,9 @@ const App = () => {
           <div className="card" key={index}>
             <h1>Review Title: {val.reviewTitle}</h1>
             <p>User Review: {val.review}</p>
+            <button onClick={() => {deleteReview(val.reviewTitle)}}> Delete </button>
+            <input type= 'text' id='updateInput' />
+            <button> Update</button>
           </div>
         ))}
       </div>
