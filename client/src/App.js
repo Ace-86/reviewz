@@ -6,7 +6,8 @@ const App = () => {
   const [reviewTitle, setReviewTitle] = useState('');
   const [review, setReview] = useState('');
   const [reviewList, setReviewList] = useState([]);
-  
+  const [newReview, setNewReview] = useState("")
+
 
   useEffect(() => {
       Axios.get('http://localhost:3001/api/get').then((response) => {
@@ -23,7 +24,7 @@ const App = () => {
       reviewTitle: reviewTitle, 
       review: review
     });
-    // removed promise to update page w/ new data without reload
+    // removed promise and sperated to update page w/ new data without reload
       setReviewList([...reviewList,
         {reviewTitle: reviewTitle,
           review: review
@@ -31,8 +32,19 @@ const App = () => {
     
   }
 
+  //need to figure out how to display updated information without refreshing each time
   const deleteReview = (title) => {
     Axios.delete(`http://localhost:3001/api/delete/${title}`);
+    
+  }
+
+  //need to figure out how to display updated information without refreshing each time
+  const updateReview = (title) => {
+    Axios.put("http://localhost:3001/api/update", {
+      reviewTitle: title,
+      review: newReview,
+    })
+    setNewReview("")
   }
 
   return (
@@ -62,8 +74,10 @@ const App = () => {
             <h1>Review Title: {val.reviewTitle}</h1>
             <p>User Review: {val.review}</p>
             <button onClick={() => {deleteReview(val.reviewTitle)}}> Delete </button>
-            <input type= 'text' id='updateInput' />
-            <button> Update</button>
+            <input type= 'text' id='updateInput' onChange={(e) => {
+              setNewReview(e.target.value);
+            }} />
+            <button onClick={() => {updateReview(val.reviewTitle)}}> Update</button>
           </div>
         ))}
       </div>

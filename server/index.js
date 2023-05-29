@@ -21,11 +21,13 @@ con.connect(function(err){
     }
 })
 
-
+// CORS!!!! Without this, my app was not able to properly communicate with database
 app.use(cors());
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}));
 
+
+// grabs all data from database and makes it available for use on frontend;
 app.get('/api/get', (req, res) => {
     const sqlSelect =
     "SELECT * FROM reviews";
@@ -35,6 +37,7 @@ app.get('/api/get', (req, res) => {
     });
 })
 
+// adds user input and updates database
 app.post("/api/insert", (req, res) => {
     const reviewTitle = req.body.reviewTitle
     const review = req.body.review
@@ -44,6 +47,7 @@ app.post("/api/insert", (req, res) => {
     })
 });
 
+// deletes data from from database; takes effect on refresh
 app.delete("/api/delete/:reviewTitle", (req, res) => {
     const title = req.params.reviewTitle
     const sqlDelete = 
@@ -51,8 +55,18 @@ app.delete("/api/delete/:reviewTitle", (req, res) => {
    con.query(sqlDelete, title, (err, result) => {
     if(err) console.log(err);
    })
-   
 });
+
+//updates data from database; takes effect on refresh
+app.put("/api/update", (req, res) => {
+    const name = req.body.reviewTitle;
+    const summary = req.body.review;
+    const sqlUpdate = "UPDATE reviews SET review = ? WHERE reviewTitle = ?"
+
+    con.query(sqlUpdate, [summary, name], (err, result) => {
+        if (err) console.log(err);
+    })
+})
 
 app.listen(3001, () =>{
     console.log('running port 3001')
