@@ -21,9 +21,19 @@ con.connect(function(err){
     }
 })
 
+
 app.use(cors());
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.get('/api/get', (req, res) => {
+    const sqlSelect =
+    "SELECT * FROM reviews";
+    con.query(sqlSelect, (err, result) => {
+        console.log(result);
+        res.send(result)
+    });
+})
 
 app.post("/api/insert", (req, res) => {
     const reviewTitle = req.body.reviewTitle
