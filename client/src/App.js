@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Axios from 'axios';
 
 const App = () => {
   const [reviewTitle, setReviewTitle] = useState('');
   const [review, setReview] = useState('');
+  const [reviewList, setReviewList] = useState([]);
+  
+  useEffect(() => {
+  
+      Axios.get('http://localhost:3001/api/get').then((response) => {
+        console.log(response.data);
+        setReviewList(response.data)
+      })
+    
+  }, []);
+
 
   const  submitReview = () => {
     Axios.post('http://localhost:3001/api/insert', 
@@ -15,6 +26,8 @@ const App = () => {
       alert("successful insert")
     })
   }
+
+
   return (
     <div className="app">
       <div className="review-input-container">
@@ -33,7 +46,13 @@ const App = () => {
           onChange={e => setReview(e.target.value )}
         />
         <button onClick={submitReview} >Add Review</button>
-      </div>
+        </div>
+      
+      {reviewList.map((val) => {
+        return <h1> 
+          reviewTitle: {val.reviewTitle} | User Review: {val.review}
+        </h1>
+      })};
     </div>
   );
 };
